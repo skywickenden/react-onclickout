@@ -24,7 +24,9 @@ var ClickOutComponent = (function (_React$Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       var self = this,
-          el = ReactDOM.findDOMNode(this);
+          el = ReactDOM.findDOMNode(this),
+          windowTouchMoved = false,
+          elTouchMoved = false;
 
       self.__windowListener = function (e) {
         if (e.__clickedElement === el) return;
@@ -40,13 +42,43 @@ var ClickOutComponent = (function (_React$Component) {
       self.__elementListener = function (e) {
         e.__clickedElement = el;
       };
+      
+      self.__windowTouchStartListener = function (e) {
+        windowTouchMoved = false;
+      };
 
+      self.__elementTouchStartListener = function (e) {
+        elTouchMoved = false;
+      };   
+      
+      
+      self.__windowTouchMoveListener = function (e) {
+        elTouchMoved = true;
+      };
+
+      self.__elementTouchMoveListener = function (e) {
+        windowTouchMoved = true;
+      };      
+      
+      self.__windowTouchEndListener = function (e) {
+        if (!elTouchMoved) self.__windowListener(e);
+      };
+
+      self.__elementTouchEndListener = function (e) {
+        if (!elTouchMoved) self.__elementListener(e);
+      };       
+      
       setTimeout(function () {
         if (self.__unmounted) return;
         window.addEventListener('click', self.__windowListener);
-        window.addEventListener('touchstart', self.__windowListener);
         el.addEventListener('click', self.__elementListener);
-        el.addEventListener('touchstart', self.__elementListener);        
+
+        window.addEventListener('touchstart', self.__windowListener);        
+        el.addEventListener('touchstart', self.__elementListener);     
+        window.addEventListener('touchmove', self.__windowTouchMoveListener);        
+        el.addEventListener('touchmove', self.__elementTouchMoveListener);   
+        window.addEventListener('touchend', self.__windowTouchEndListener);        
+        el.addEventListener('touchend', self.__elementTouchEndListener);   
       }, 0);
     }
   }, {

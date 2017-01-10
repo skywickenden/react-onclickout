@@ -44,7 +44,9 @@ var ClickOutComponent = (function (_React$Component) {
       setTimeout(function () {
         if (self.__unmounted) return;
         window.addEventListener('click', self.__windowListener);
+        window.addEventListener('touchstart', self.__windowListener);
         el.addEventListener('click', self.__elementListener);
+        el.addEventListener('touchstart', self.__elementListener);        
       }, 0);
     }
   }, {

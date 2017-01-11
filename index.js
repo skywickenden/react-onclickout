@@ -85,7 +85,13 @@ var ClickOutComponent = (function (_React$Component) {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
       window.removeEventListener('click', this.__windowListener);
+      window.removeEventListener('touchstart', this.__windowListener);
+      window.removeEventListener('touchmove', this.__windowListener);
+      window.removeEventListener('touchend', this.__windowListener);
       ReactDOM.findDOMNode(this).removeEventListener('click', this.__elementListener);
+      ReactDOM.findDOMNode(this).removeEventListener('touchstart', this.__elementListener);
+      ReactDOM.findDOMNode(this).removeEventListener('touchmove', this.__elementListener);
+      ReactDOM.findDOMNode(this).removeEventListener('touchend', this.__elementListener);
       this.__unmounted = true;
     }
   }, {

@@ -73,8 +73,8 @@ var ClickOutComponent = (function (_React$Component) {
         window.addEventListener('click', self.__windowListener);
         el.addEventListener('click', self.__elementListener);
 
-        window.addEventListener('touchstart', self.__windowListener);        
-        el.addEventListener('touchstart', self.__elementListener);     
+        window.addEventListener('touchstart', self.__windowTouchStartListener);        
+        el.addEventListener('touchstart', self.__elementTouchStartListener);     
         window.addEventListener('touchmove', self.__windowTouchMoveListener);        
         el.addEventListener('touchmove', self.__elementTouchMoveListener);   
         window.addEventListener('touchend', self.__windowTouchEndListener);        
@@ -85,13 +85,13 @@ var ClickOutComponent = (function (_React$Component) {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
       window.removeEventListener('click', this.__windowListener);
-      window.removeEventListener('touchstart', this.__windowListener);
-      window.removeEventListener('touchmove', this.__windowListener);
-      window.removeEventListener('touchend', this.__windowListener);
+      window.removeEventListener('touchstart', this.__windowTouchStartListener);
+      window.removeEventListener('touchmove', this.__windowTouchMoveListener);
+      window.removeEventListener('touchend', this.__windowTouchEndListener);
       ReactDOM.findDOMNode(this).removeEventListener('click', this.__elementListener);
-      ReactDOM.findDOMNode(this).removeEventListener('touchstart', this.__elementListener);
-      ReactDOM.findDOMNode(this).removeEventListener('touchmove', this.__elementListener);
-      ReactDOM.findDOMNode(this).removeEventListener('touchend', this.__elementListener);
+      ReactDOM.findDOMNode(this).removeEventListener('touchstart', this.__elementTouchStartListener);
+      ReactDOM.findDOMNode(this).removeEventListener('touchmove', this.__elementTouchMoveListener);
+      ReactDOM.findDOMNode(this).removeEventListener('touchend', this.__elementTouchEndListener);
       this.__unmounted = true;
     }
   }, {
